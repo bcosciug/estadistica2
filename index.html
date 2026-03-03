@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Completa de Estadistica</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f1a;--card:#1a1f38;--border:#252d4a;--a1:#e8b86d;--a2:#6d9ee8;--a3:#e86d8a;--a4:#6de8b8;--text:#e8eaf6;--muted:#8892b0;--fbg:#0a0d1a;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0d0f1a,#131629,#1a1030);padding:80px 40px 60px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(109,158,232,.13) 0%,transparent 70%);}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:900;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative;}
+  .hero p{color:var(--muted);font-size:1.05rem;margin-top:10px;position:relative;}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(13,15,26,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 12px;display:flex;flex-wrap:wrap;gap:1px;justify-content:center;}
+  nav a{color:var(--muted);text-decoration:none;font-size:.73rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:12px 9px;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+  nav a:hover{color:var(--a1);border-bottom-color:var(--a1);}
+  /* CHAPTER DIVIDER */
+  .chapter-header{background:linear-gradient(90deg,rgba(232,184,109,.1),transparent);border-left:4px solid var(--a1);border-radius:0 10px 10px 0;padding:18px 24px;margin:50px 0 30px;display:flex;align-items:center;gap:14px;}
+  .chapter-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--a1);}
+  .chapter-header .ch-badge{background:var(--a1);color:#000;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+  /* LAYOUT */
+  .container{max-width:990px;margin:0 auto;padding:50px 24px;}
+  .section{margin-bottom:65px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--a1);margin-bottom:24px;padding-bottom:11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;}
+  .sub-title{font-size:1.1rem;font-weight:600;color:var(--a2);margin:24px 0 12px;}
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;position:relative;}
+  .card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;}
+  .card.y::before{background:var(--a1);}
+  .card.b::before{background:var(--a2);}
+  .card.p::before{background:var(--a3);}
+  .card.g::before{background:var(--a4);}
+  /* FORMULA */
+  .formula{background:var(--fbg);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:11px 0;font-family:'Fira Code',monospace;font-size:.95rem;color:var(--a4);text-align:center;}
+  .formula .lbl{font-family:'Source Sans 3',sans-serif;font-size:.73rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+  .formula .big{font-size:1.15rem;color:#fff;}
+  .formula em{color:var(--a1);font-style:normal;}
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.9rem;}
+  th{background:var(--border);color:var(--a1);font-weight:600;padding:9px 12px;text-align:left;}
+  td{padding:8px 12px;border-bottom:1px solid var(--border);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(109,158,232,.05);}
+  /* BADGES */
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.72rem;font-weight:600;letter-spacing:.04em;margin-right:4px;text-transform:uppercase;}
+  .by{background:rgba(232,184,109,.15);color:var(--a1);border:1px solid rgba(232,184,109,.3);}
+  .bb{background:rgba(109,158,232,.15);color:var(--a2);border:1px solid rgba(109,158,232,.3);}
+  .bp{background:rgba(232,109,138,.15);color:var(--a3);border:1px solid rgba(232,109,138,.3);}
+  .bg{background:rgba(109,232,184,.15);color:var(--a4);border:1px solid rgba(109,232,184,.3);}
+  /* GRIDS */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:15px;}
+  @media(max-width:640px){.two-col,.three-col{grid-template-columns:1fr;}}
+  /* DISTRIB CARD */
+  .dc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:transform .2s,box-shadow .2s;}
+  .dc:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(0,0,0,.3);}
+  .dc h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:4px;}
+  /* BOXES */
+  .rem{background:rgba(232,184,109,.06);border:1px solid rgba(232,184,109,.25);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.91rem;}
+  .rem strong{color:var(--a1);}
+  .warn{background:rgba(232,109,138,.06);border:1px solid rgba(232,109,138,.25);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.91rem;}
+  .warn strong{color:var(--a3);}
+  .info{background:rgba(109,158,232,.06);border:1px solid rgba(109,158,232,.25);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.91rem;}
+  .info strong{color:var(--a2);}
+  /* STEPS */
+  .step{display:flex;gap:14px;align-items:flex-start;margin-bottom:13px;}
+  .stepn{min-width:28px;height:28px;background:var(--a2);color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.86rem;flex-shrink:0;}
+  .stepc{padding-top:2px;}
+  p{margin-bottom:8px;color:#c8cce8;}
+  ul{padding-left:20px;margin-bottom:8px;color:#c8cce8;}
+  li{margin-bottom:4px;}
+  code{font-family:'Fira Code',monospace;font-size:.85rem;background:rgba(109,158,232,.1);padding:2px 5px;border-radius:4px;color:var(--a2);}
+  strong{color:#e2e8f0;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Guia Completa de Estadistica</h1>
+  <p>Probabilidad &middot; Distribuciones Univariadas &middot; Distribuciones Multivariadas &middot; Covarianza &middot; Correlacion &middot; Inferencia</p>
+</div>
+
+<nav>
+  <a href="#prob">Probabilidad</a>
+  <a href="#cond">Condicional</a>
+  <a href="#bayes">Bayes</a>
+  <a href="#va">Variables</a>
+  <a href="#udiscreta">Unif. Discreta</a>
+  <a href="#bernoulli">Bernoulli</a>
+  <a href="#binomial">Binomial</a>
+  <a href="#poisson">Poisson</a>
+  <a href="#unifcont">Unif. Continua</a>
+  <a href="#exponencial">Exponencial</a>
+  <a href="#gamma">Gamma</a>
+  <a href="#normal">Normal</a>
+  <a href="#qqplot">Q-Q Plot</a>
+  <a href="#multi">Multivariadas</a>
+  <a href="#indep">Independencia</a>
+  <a href="#cov">Covarianza</a>
+  <a href="#corr">Correlacion</a>
+  <a href="#contingencia">Contingencia</a>
+  <a href="#inferencia">Inferencia</a>
+  <a href="#chuleta">Chuleta</a>
+</nav>
+
+<div class="container">
+
+<!-- ══════ CAPITULO BASE ══════ -->
+<div id="prob" class="section">
+  <div class="section-title">&#127922; 1. Probabilidad &mdash; Conceptos Base</div>
+  <div class="card y">
+    <p><strong>La probabilidad</strong> mide la certeza de que ocurra un evento. Siempre esta entre 0 y 1.</p>
+    <div class="formula"><div class="lbl">Probabilidad clasica (Laplace)</div><div class="big">P(A) = <em>casos favorables</em> / casos totales</div></div>
+  </div>
+  <div class="sub-title">Propiedades fundamentales</div>
+  <div class="two-col">
+    <div class="card b"><strong>Complementario</strong><div class="formula">P(A&#x1D9C;) = 1 &minus; P(A)</div><p style="font-size:.88rem">Si hay 70% de lluvia, hay 30% de no lluvia.</p></div>
+    <div class="card b"><strong>Union (A o B)</strong><div class="formula">P(A&cup;B) = P(A) + P(B) &minus; P(A&cap;B)</div><p style="font-size:.88rem">Resta la interseccion para no contarla dos veces.</p></div>
+    <div class="card g"><strong>Interseccion (A y B)</strong><div class="formula">P(A&cap;B) = P(A) &middot; P(B|A)</div></div>
+    <div class="card g"><strong>Mutuamente excluyentes</strong><div class="formula">P(A&cap;B) = 0 &rArr; P(A&cup;B) = P(A)+P(B)</div></div>
+  </div>
+</div>
+
+<div id="cond" class="section">
+  <div class="section-title">&#128256; 2. Probabilidad Condicional</div>
+  <div class="card y">
+    <p><strong>La probabilidad de B sabiendo que ya ocurrio A.</strong></p>
+    <p style="font-size:.88rem;color:var(--muted)">Ejemplo: &ldquo;Sabiendo que saque un 6, que probabilidad hay de sacar un 2?&rdquo;</p>
+    <div class="formula"><div class="lbl">Formula clave</div><div class="big">P(B|A) = <em>P(A&cap;B)</em> / P(A)</div></div>
+  </div>
+  <div class="rem"><strong>Complementario condicional:</strong> P(B&#x1D9C;|A) + P(B|A) = 1</div>
+  <div class="sub-title">Independencia de eventos</div>
+  <div class="card p"><p>A y B son <strong>independientes</strong> si el conocimiento de uno no afecta al otro:</p><div class="formula">P(A&cap;B) = P(A) &middot; P(B)</div><p style="font-size:.88rem">Equivalente: P(B|A) = P(B)</p></div>
+  <div class="sub-title">Ejemplo bombillas</div>
+  <div class="card b"><p>P(buena | no funciona) = P(buena &cap; no funciona) / P(no funciona)</p><div class="formula">(250/400) / (350/400) = 250/350 &asymp; 0.71</div></div>
+</div>
+
+<div id="bayes" class="section">
+  <div class="section-title">&#129518; 3. Teorema de Bayes</div>
+  <div class="card b">
+    <p>Permite <strong>actualizar probabilidades</strong> al obtener nueva informacion.</p>
+    <div class="formula"><div class="lbl">Teorema de Bayes</div><div class="big">P(A&#7522;|B) = <em>P(B|A&#7522;) &middot; P(A&#7522;)</em> / &sum;&#8408; P(B|A&#8408;)&middot;P(A&#8408;)</div></div>
+  </div>
+  <table>
+    <tr><th>Termino</th><th>Nombre</th><th>Significado</th></tr>
+    <tr><td><code>P(A&#7522;)</code></td><td>A priori</td><td>Lo que sabiamos antes</td></tr>
+    <tr><td><code>P(B|A&#7522;)</code></td><td>Verosimilitud</td><td>Prob. de observar B si ocurre A&#7522;</td></tr>
+    <tr><td><code>P(A&#7522;|B)</code></td><td>A posteriori</td><td>Lo que sabemos tras observar B</td></tr>
+    <tr><td><code>&sum; P(B|A&#8408;)&middot;P(A&#8408;)</code></td><td>Prob. total de B</td><td>Denominador normalizador</td></tr>
+  </table>
+  <div class="rem"><strong>Probabilidad Total:</strong> P(B) = P(B|A&#8321;)&middot;P(A&#8321;) + P(B|A&#8322;)&middot;P(A&#8322;) + &hellip; + P(B|A&#8345;)&middot;P(A&#8345;)</div>
+</div>
+
+<div id="va" class="section">
+  <div class="section-title">&#128202; 4. Variables Aleatorias</div>
+  <div class="two-col">
+    <div class="card y"><span class="badge by">Discreta</span><p>Toma valores <strong>contables</strong>. Los posibles resultados pueden ser contados, aun cuando sean infinitos.</p><p style="font-size:.88rem">Ejemplos: num. de fallos hasta lanzar un cohete con exito, num. de alumnos que aprueban, num. de taxis que pasan.</p></div>
+    <div class="card b"><span class="badge bb">Continua</span><p>Toma valores en un <strong>intervalo real</strong>. Cualquier funcion positiva cuya integral en el dominio sea 1 puede ser una funcion de densidad.</p><p style="font-size:.88rem">Ejemplos: peso, altura, tiempo, diametro de particulas.</p></div>
+  </div>
+  <div class="sub-title">Medidas importantes</div>
+  <div class="two-col">
+    <div class="card g"><strong>Media / Esperanza E[X]</strong><div class="formula">E[X] = &sum; x&#7522; &middot; P(x&#7522;) &nbsp; (discreta)</div><div class="formula">E[X] = &int; x &middot; f(x) dx &nbsp; (continua)</div></div>
+    <div class="card p"><strong>Varianza y Desviacion tipica</strong><div class="formula">Var(X) = E[X&#178;] &minus; (E[X])&#178;</div><div class="formula">&sigma; = &radic;Var(X)</div></div>
+  </div>
+  <div class="rem"><strong>Propiedades lineales:</strong> E[aX+b] = a&middot;E[X]+b &nbsp;&nbsp; Var(aX+b) = a&#178;&middot;Var(X)</div>
+</div>
+
+<!-- ══════ CAPITULO 4 — DISTRIBUCIONES UNIVARIADAS ══════ -->
+<div class="chapter-header">
+  <span class="ch-badge">Capitulo 4</span>
+  <h2>Distribuciones de Probabilidad Univariadas</h2>
+</div>
+
+<!-- UNIFORME DISCRETA -->
+<div id="udiscreta" class="section">
+  <div class="section-title">&#127922; 5. Distribucion Uniforme Discreta</div>
+  <div class="card y">
+    <p>La v.a. X sigue una <strong>distribucion uniforme discreta</strong> con parametro n si la probabilidad es la misma para todos los valores x&#8321;, x&#8322;, &hellip;, x&#8345;.</p>
+    <div class="formula"><div class="lbl">Funcion de probabilidad</div><div class="big">P(X = x&#7522; | n) = <em>1/n</em> &nbsp; i = 1, 2, &hellip;, n</div></div>
+    <div class="two-col">
+      <div class="formula">E[X] = (1/n) &sum;<sup>n</sup>&#7522;&#8325;&#8321; x&#7522;</div>
+      <div class="formula">Var[X] = (1/n) &sum;<sup>n</sup>&#7522;&#8325;&#8321; (x&#7522; &minus; E[X])&#178;</div>
+    </div>
+    <div class="formula"><div class="lbl">Funcion generatriz de momentos</div>M&#7819;(t) = (1/n) &sum;<sup>n</sup>&#7522;&#8325;&#8321; e<sup>tx&#7522;</sup></div>
+  </div>
+  <div class="rem">
+    <strong>Caso especial:</strong> Cuando x&#7522; = i para i = 1, &hellip;, n:<br>
+    E[X] = (n+1)/2 &nbsp;&nbsp;&nbsp; Var[X] = (n&#178;&minus;1)/12
+  </div>
+  <div class="sub-title">Ejemplo 4.1 &mdash; Bombillas</div>
+  <div class="card b">
+    <p>Se coge una bombilla al azar de una caja con bombillas de 40, 60, 75, 100 y 120 watios (n=5).</p>
+    <div class="formula">P(X = x&#7522;) = 1/5 = 0.2 para cada valor</div>
+    <div class="two-col">
+      <div class="formula">E[X] = (40+60+75+100+120)/5 = 395/5 = <em>79 watios</em></div>
+      <div class="formula">Var[X] = (1/5)&sum;(x&#7522;&minus;79)&#178;</div>
+    </div>
+  </div>
+</div>
+
+<!-- BERNOULLI -->
+<div id="bernoulli" class="section">
+  <div class="section-title">&#129300; 6. Distribucion Bernoulli</div>
+  <div class="card y">
+    <p>Un <strong>experimento de Bernoulli</strong> tiene exactamente dos posibles resultados: exito o fracaso. Lanzar una moneda es el ejemplo tipico.</p>
+    <ul>
+      <li>Cada lanzamiento tiene dos posibles resultados: cara o cruz</li>
+      <li>Los lanzamientos son <strong>independientes</strong></li>
+      <li>La probabilidad de exito es <strong>constante</strong></li>
+    </ul>
+  </div>
+  <div class="card b">
+    <span class="badge bb">X ~ Bernoulli(&pi;)</span>
+    <div class="formula"><div class="lbl">Funcion de probabilidad</div><div class="big">P(X=x|&pi;) = &pi;<sup>x</sup>(1&minus;&pi;)<sup>1&minus;x</sup> &nbsp; x = 0, 1</div></div>
+    <div class="three-col">
+      <div class="formula">E[X] = &pi;</div>
+      <div class="formula">Var[X] = &pi;(1&minus;&pi;)</div>
+      <div class="formula">M&#7819;(t) = &pi;e<sup>t</sup> + (1&minus;&pi;)</div>
+    </div>
+  </div>
+  <div class="rem">
+    <strong>Interpretacion:</strong> X = 1 si exito (con prob. &pi;), X = 0 si fracaso (con prob. 1&minus;&pi;).<br>
+    La distribucion Bernoulli es el <em>bloque basico</em> de la Binomial.
+  </div>
+</div>
+
+<!-- BINOMIAL -->
+<div id="binomial" class="section">
+  <div class="section-title">&#127919; 7. Distribucion Binomial</div>
+  <div class="card y">
+    <p><strong>Condiciones de un experimento Binomial:</strong></p>
+    <ul>
+      <li>Numero fijo <strong>n</strong> de experimentos de Bernoulli</li>
+      <li>Probabilidad de exito <strong>&pi; constante</strong> en cada repeticion</li>
+      <li>Las repeticiones son <strong>independientes</strong></li>
+      <li>X = numero de exitos en las n repeticiones</li>
+    </ul>
+  </div>
+  <div class="card b">
+    <span class="badge bb">X ~ Bin(n, &pi;)</span>
+    <div class="formula"><div class="lbl">Funcion de masa de probabilidad</div><div class="big">P(X=x|n,&pi;) = C(n,x) &middot; <em>&pi;<sup>x</sup></em> &middot; (1&minus;&pi;)<sup>n&minus;x</sup> &nbsp; x = 0,1,&hellip;,n</div></div>
+    <div class="three-col">
+      <div class="formula">E[X] = n&pi;</div>
+      <div class="formula">Var[X] = n&pi;(1&minus;&pi;)</div>
+      <div class="formula">M&#7819;(t) = (&pi;e<sup>t</sup>+1&minus;&pi;)<sup>n</sup></div>
+    </div>
+    <p style="font-size:.88rem">C(n,x) = n! / (x!(n&minus;x)!) &nbsp;= combinatorio de n sobre x</p>
+  </div>
+  <div class="sub-title">Ejemplo 4.2 &mdash; Moneda trucada</div>
+  <div class="card g">
+    <p>Lanzar una moneda 10 veces. P(cara) = 0.33. Calcular P(X &ge; 6).</p>
+    <div class="formula">X ~ Bin(10, 0.33)</div>
+    <div class="formula">P(X &ge; 6) = &sum;<sup>10</sup><sub>x=6</sub> C(10,x) &middot; 0.33<sup>x</sup> &middot; 0.67<sup>10&minus;x</sup></div>
+    <p style="font-size:.88rem">En R: <code>pbinom(5, 10, 0.33, lower.tail=FALSE)</code> o <code>sum(dbinom(6:10, 10, 0.33))</code></p>
+  </div>
+  <div class="rem">
+    <strong>PDF vs CDF Binomial (Figura 4.1 del libro):</strong><br>
+    La PDF muestra las probabilidades puntuales P(X=x). La CDF muestra P(X &le; x) acumulado, creciente de 0 a 1.
+  </div>
+</div>
+
+<!-- POISSON -->
+<div id="poisson" class="section">
+  <div class="section-title">&#128222; 8. Distribucion de Poisson</div>
+  <div class="card y">
+    <p>Modela el <strong>numero de veces que ocurre un evento en un tiempo o espacio definido</strong>. Ejemplos tipicos:</p>
+    <ul>
+      <li>Numero de llamadas al 112 entre la 1 a.m. y 2 a.m.</li>
+      <li>Numero de accidentes en un cruce durante 24 horas</li>
+      <li>Numero de errores en una pagina de un libro</li>
+      <li>Numero de taxis que pasan por una calle</li>
+    </ul>
+  </div>
+  <div class="card b">
+    <p><strong>Condiciones para un proceso de Poisson:</strong></p>
+    <ul>
+      <li>El numero de eventos en intervalos <strong>no solapados es independiente</strong></li>
+      <li>La probabilidad de dos o mas eventos en un intervalo muy pequeno es <strong>virtualmente cero</strong></li>
+      <li>La probabilidad de exactamente un evento en un intervalo pequeno es <strong>proporcional a la longitud</strong> del intervalo</li>
+    </ul>
+  </div>
+  <div class="card p">
+    <span class="badge bp">X ~ Pois(&lambda;)</span>
+    <div class="formula"><div class="lbl">Funcion de masa de probabilidad</div><div class="big">P(X=x|&lambda;) = <em>&lambda;<sup>x</sup> e<sup>&minus;&lambda;</sup></em> / x! &nbsp; x = 0, 1, 2, &hellip;</div></div>
+    <div class="three-col">
+      <div class="formula">E[X] = &lambda;</div>
+      <div class="formula">Var[X] = &lambda;</div>
+      <div class="formula">M&#7819;(t) = e<sup>&lambda;(e<sup>t</sup>&minus;1)</sup></div>
+    </div>
+  </div>
+  <div class="warn">
+    <strong>Aproximacion Poisson a Binomial:</strong><br>
+    Se puede usar Poisson para aproximar Binomial con &lambda; = n&pi; si se cumple que <strong>&pi; &le; 0.1</strong> y <strong>n&pi; &le; 5</strong>.
+  </div>
+  <div class="sub-title">Ejemplo 4.3 &mdash; Llamadas al 911 (&lambda; = 2 por minuto)</div>
+  <div class="card g">
+    <p><strong>(a) Ninguna llamada en 1 minuto:</strong></p>
+    <div class="formula">P(X=0) = e<sup>&minus;2</sup> &middot; 2<sup>0</sup> / 0! = e<sup>&minus;2</sup> &asymp; 0.1353</div>
+    <p><strong>(b) Menos de 5 llamadas en 1 minuto:</strong></p>
+    <div class="formula">P(X &lt; 5) = &sum;<sup>4</sup><sub>x=0</sub> e<sup>&minus;2</sup> 2<sup>x</sup>/x! &nbsp; En R: <code>ppois(4, 2)</code></div>
+    <p><strong>(c) Menos de 6 llamadas en 1 hora (&lambda; = 2&times;60 = 120):</strong></p>
+    <div class="formula">P(X &lt; 6) = &sum;<sup>5</sup><sub>x=0</sub> e<sup>&minus;120</sup> 120<sup>x</sup>/x! &nbsp; En R: <code>ppois(5, 120)</code></div>
+    <div class="rem"><strong>Nota:</strong> Cuando &lambda; cambia de escala (de minutos a horas), se multiplica: &lambda;<sub>hora</sub> = 2 &times; 60 = 120.</div>
+  </div>
+</div>
+
+<!-- UNIFORME CONTINUA -->
+<div id="unifcont" class="section">
+  <div class="section-title">&#9633; 9. Distribucion Uniforme Continua</div>
+  <div class="card y">
+    <p>X es uniforme en [a,b] si todos los valores entre a y b son <strong>igualmente probables</strong>. Usos habituales: generacion de numeros aleatorios y modelado de tiempos de espera.</p>
+  </div>
+  <div class="card b">
+    <span class="badge bb">X ~ Unif(a, b)</span>
+    <div class="formula"><div class="lbl">Funcion de densidad (pdf)</div><div class="big">f(x|a,b) = <em>1/(b&minus;a)</em> &nbsp; a &le; x &le; b</div></div>
+    <div class="formula"><div class="lbl">Funcion de distribucion acumulada (cdf)</div>F(x) = (x&minus;a)/(b&minus;a) &nbsp; para a &le; x &le; b</div>
+    <div class="three-col">
+      <div class="formula">E[X] = (b+a)/2</div>
+      <div class="formula">Var[X] = (b&minus;a)&#178;/12</div>
+      <div class="formula">M&#7819;(t) = (e<sup>tb</sup>&minus;e<sup>ta</sup>) / t(b&minus;a)</div>
+    </div>
+  </div>
+  <div class="sub-title">Ejemplo 4.4 &mdash; Particulas de aerosol (diametro entre 3 y 5 nm)</div>
+  <div class="card g">
+    <p>X ~ Unif(3, 5). Se pide el volumen medio de las particulas.</p>
+    <div class="formula">E[X] = (3+5)/2 = <em>4 nanometros</em></div>
+    <div class="formula">Var[X] = (5&minus;3)&#178;/12 = 4/12 = 1/3 &asymp; 0.333</div>
+    <p style="font-size:.88rem">Si el volumen es proporcional a x&#178;, entonces E[volumen] = E[X&#178;] = Var[X] + (E[X])&#178; = 1/3 + 16 = 49/3.</p>
+  </div>
+  <div class="rem">
+    <strong>Interpretacion grafica (Figura 4.13):</strong><br>
+    La PDF es un rectangulo horizontal plano. La CDF es una recta ascendente de 0 a 1. Al cambiar a, el rectangulo se desplaza; al cambiar b&minus;a, cambia la altura y la pendiente.
+  </div>
+</div>
+
+<!-- EXPONENCIAL -->
+<div id="exponencial" class="section">
+  <div class="section-title">&#9194; 10. Distribucion Exponencial</div>
+  <div class="card y">
+    <p>Modela el <strong>tiempo de espera hasta el primer evento</strong> de un proceso de Poisson. Si X cuenta el numero de eventos en un intervalo (Poisson con media &lambda;), entonces el tiempo W hasta el primer evento sigue una distribucion Exponencial.</p>
+  </div>
+  <div class="card b">
+    <span class="badge bb">X ~ Exp(&lambda;)</span>
+    <div class="formula"><div class="lbl">Funcion de densidad</div><div class="big">f(x|&lambda;) = <em>&lambda; e<sup>&minus;&lambda;x</sup></em> &nbsp; si x &ge; 0</div></div>
+    <div class="formula"><div class="lbl">Funcion de distribucion acumulada (CDF)</div><div class="big">F(x) = 1 &minus; e<sup>&minus;&lambda;x</sup> &nbsp; x &ge; 0</div></div>
+    <div class="three-col">
+      <div class="formula">E[X] = 1/&lambda;</div>
+      <div class="formula">Var[X] = 1/&lambda;&#178;</div>
+      <div class="formula">M&#7819;(t) = (1&minus;&lambda;<sup>&minus;1</sup>t)<sup>&minus;1</sup></div>
+    </div>
+  </div>
+
+  <div class="sub-title">Propiedad de falta de memoria (sin memoria)</div>
+  <div class="card p">
+    <p>La exponencial es la <strong>unica distribucion continua sin memoria</strong>. Se usa para modelar tiempos de vida de componentes electronicos.</p>
+    <div class="formula"><div class="lbl">Propiedad formal</div>P(X &gt; t&#8322;+t&#8321; | X &gt; t&#8321;) = P(X &gt; t&#8322;) para todo t&#8321;, t&#8322; &ge; 0</div>
+    <div class="formula">Demostracion: e<sup>&minus;&lambda;(t&#8322;+t&#8321;)</sup> = e<sup>&minus;&lambda;t&#8322;</sup> &middot; e<sup>&minus;&lambda;t&#8321;</sup></div>
+    <p style="font-size:.88rem">Interpretacion: Si una bombilla lleva funcionando t&#8321; meses, la probabilidad de que funcione t&#8322; meses mas es la misma que si fuera nueva.</p>
+  </div>
+
+  <div class="sub-title">Relacion Poisson &harr; Exponencial</div>
+  <div class="card g">
+    <p>Dado un proceso de Poisson con media <strong>&lambda; eventos por unidad de tiempo</strong>:</p>
+    <ul>
+      <li>El <strong>numero de eventos</strong> en un intervalo sigue una distribucion Poisson(&lambda;)</li>
+      <li>El <strong>tiempo hasta el primer evento</strong> sigue una Exponencial con media <strong>1/&lambda;</strong></li>
+    </ul>
+    <div class="formula">Si &lambda; = num. medio de eventos/unidad &rarr; tiempo medio de espera = 1/&lambda;</div>
+  </div>
+
+  <div class="sub-title">Ejemplo 4.5 &mdash; Bombillas con vida media 8 meses (&lambda; = 1/8)</div>
+  <div class="card g">
+    <p><strong>(a) P(3 &le; X &le; 12):</strong></p>
+    <div class="formula">P(3&le;X&le;12) = F(12) &minus; F(3) = (1&minus;e<sup>&minus;12/8</sup>) &minus; (1&minus;e<sup>&minus;3/8</sup>) = e<sup>&minus;3/8</sup> &minus; e<sup>&minus;3/2</sup> &asymp; 0.6858 &minus; 0.2231 = 0.4627</div>
+    <p><strong>(b) Percentil 95 (el valor que acumula el 95% de probabilidad):</strong></p>
+    <div class="formula">F(x) = 0.95 &rarr; 1&minus;e<sup>&minus;x/8</sup> = 0.95 &rarr; x = &minus;8&middot;ln(0.05) &asymp; 23.97 meses</div>
+    <p style="font-size:.88rem">En R: <code>qexp(0.95, rate=1/8)</code></p>
+    <p><strong>(c) P(X &gt; 25 | X &gt; 10) por falta de memoria:</strong></p>
+    <div class="formula">P(X &gt; 25 | X &gt; 10) = P(X &gt; 15) = e<sup>&minus;15/8</sup> &asymp; 0.1534</div>
+  </div>
+</div>
+
+<!-- GAMMA -->
+<div id="gamma" class="section">
+  <div class="section-title">&#915; 11. Distribucion Gamma</div>
+  <div class="card y">
+    <p>Generaliza la Exponencial. Modela el <strong>tiempo de espera hasta el &alpha;-esimo evento</strong> de un proceso de Poisson. Util para variables no negativas con distribuciones asimericas.</p>
+    <p style="font-size:.88rem">Ejemplos: tiempo hasta el &alpha;-esimo error en un motor, tiempo hasta el &alpha;-esimo accidente en un cruce.</p>
+  </div>
+
+  <div class="sub-title">Funcion Gamma &Gamma;(&alpha;)</div>
+  <div class="card b">
+    <div class="formula"><div class="lbl">Definicion de la funcion Gamma</div><div class="big">&Gamma;(&alpha;) = &int;<sub>0</sub><sup>&infin;</sup> x<sup>&alpha;&minus;1</sup> e<sup>&minus;x</sup> dx &nbsp; (&alpha; &gt; 0)</div></div>
+    <p><strong>Propiedades importantes:</strong></p>
+    <ul>
+      <li>Para &alpha; &gt; 0: &Gamma;(&alpha;+1) = &alpha;&Gamma;(&alpha;) &nbsp; (recurrencia)</li>
+      <li>Para entero positivo n: &Gamma;(n) = (n&minus;1)! &nbsp; (factorial generalizado)</li>
+      <li>&Gamma;(1/2) = &radic;&pi;</li>
+    </ul>
+  </div>
+
+  <div class="card p">
+    <span class="badge bp">X ~ &Gamma;(&alpha;, &lambda;)</span>
+    <div class="formula"><div class="lbl">Funcion de densidad</div><div class="big">f(x|&alpha;,&lambda;) = [<em>&lambda;<sup>&alpha;</sup> / &Gamma;(&alpha;)</em>] &middot; x<sup>&alpha;&minus;1</sup> e<sup>&minus;&lambda;x</sup> &nbsp; x &ge; 0</div></div>
+    <div class="three-col">
+      <div class="formula">E[X] = &alpha;/&lambda;</div>
+      <div class="formula">Var[X] = &alpha;/&lambda;&#178;</div>
+      <div class="formula">M&#7819;(t) = (1&minus;&lambda;<sup>&minus;1</sup>t)<sup>&minus;&alpha;</sup></div>
+    </div>
+  </div>
+
+  <div class="sub-title">Relaciones utiles de la distribucion Gamma</div>
+  <div class="card g">
+    <table>
+      <tr><th>Condicion</th><th>Distribucion resultante</th><th>Uso</th></tr>
+      <tr><td>&alpha; = 1</td><td>X ~ Exp(&lambda;)</td><td>Tiempo hasta el 1er evento</td></tr>
+      <tr><td>&alpha; = n/2, &lambda; = 1/2</td><td>X ~ &chi;&#178;(n)</td><td>Chi-cuadrado con n grados de libertad</td></tr>
+      <tr><td>&alpha; entero positivo</td><td>Distribucion de Erlang</td><td>Tiempo hasta el &alpha;-esimo evento</td></tr>
+      <tr><td>Muestra de tamano n</td><td>X&#772; ~ &Gamma;(n&alpha;, n&lambda;)</td><td>Distribucion de la media muestral</td></tr>
+    </table>
+  </div>
+
+  <div class="sub-title">Ejemplo 4.6 &mdash; Restaurante con &lambda; = 3 coches/minuto</div>
+  <div class="card b">
+    <p><strong>(a) P(al menos 5 coches en 120 segundos = 2 minutos):</strong></p>
+    <div class="formula">En 2 minutos: &lambda;&middot;t = 3&times;2 = 6 coches esperados. X ~ Pois(6).<br>P(X &ge; 5) = 1 &minus; P(X &le; 4) &nbsp; En R: <code>1 - ppois(4, 6)</code></div>
+    <p><strong>(b) P(mas de 1 minuto antes del segundo coche):</strong></p>
+    <div class="formula">Tiempo hasta 2do coche: W ~ &Gamma;(2, 3). P(W &gt; 1) = 1 &minus; P(W &le; 1)<br>En R: <code>1 - pgamma(1, shape=2, rate=3)</code></div>
+    <p><strong>(c) Tiempo medio de espera hasta el tercer coche (dado que ya paso uno):</strong></p>
+    <div class="formula">Tiempo adicional para 2 coches mas: W ~ &Gamma;(2, 3). E[W] = &alpha;/&lambda; = 2/3 minutos &asymp; 40 segundos</div>
+  </div>
+</div>
+
+<!-- NORMAL -->
+<div id="normal" class="section">
+  <div class="section-title">&#128276; 12. Distribucion Normal (Gaussiana)</div>
+  <div class="card y">
+    <p>La distribucion mas importante en estadistica. Muchas poblaciones tienen distribuciones que se aproximan por una Normal. Ademas, la media muestral sigue aproximadamente una distribucion normal (Teorema Central del Limite).</p>
+  </div>
+  <div class="card b">
+    <span class="badge bb">X ~ N(&mu;, &sigma;)</span>
+    <div class="formula"><div class="lbl">Funcion de densidad</div><div class="big">f(x|&mu;,&sigma;) = <em>1/(&sigma;&radic;2&pi;)</em> &middot; e<sup>&minus;(x&minus;&mu;)&#178;/(2&sigma;&#178;)</sup></div></div>
+    <div class="three-col">
+      <div class="formula">E[X] = &mu;</div>
+      <div class="formula">Var[X] = &sigma;&#178;</div>
+      <div class="formula">M&#7819;(t) = e<sup>&mu;t + &sigma;&#178;t&#178;/2</sup></div>
+    </div>
+    <div class="formula"><div class="lbl">CDF (no tiene forma cerrada, se usa tabla o software)</div>F(x) = (1/&radic;2&pi;&sigma;&#178;) &int;<sub>&minus;&infin;</sub><sup>x</sup> e<sup>&minus;(t&minus;&mu;)&#178;/(2&sigma;&#178;)</sup> dt</div>
+  </div>
+  <div class="info">
+    <strong>Propiedades de la campana de Gauss:</strong><br>
+    - Forma de campana <strong>simetrica</strong> respecto a la media &mu;<br>
+    - Cuanto mayor es &sigma;, mas <strong>achatada y ancha</strong> es la campana<br>
+    - El punto de inflexion esta en &mu; &plusmn; &sigma;<br>
+    - La curva se extiende de &minus;&infin; a +&infin; (asintota horizontal)
+  </div>
+
+  <div class="sub-title">Normal Estandar y Estandarizacion</div>
+  <div class="card p">
+    <p>Una Normal con &mu;=0 y &sigma;=1, denotada Z, es la <strong>Normal estandar</strong>. Para calcular probabilidades de cualquier Normal, se estandariza:</p>
+    <div class="formula"><div class="lbl">Cambio de variable: estandarizacion</div><div class="big">Z = (<em>X &minus; &mu;</em>) / &sigma; &nbsp; ~ N(0,1)</div></div>
+    <div class="formula"><div class="lbl">Calculo de P(a &le; X &le; b)</div>P(a&le;X&le;b) = P((a&minus;&mu;)/&sigma; &le; Z &le; (b&minus;&mu;)/&sigma;) = &Phi;((b&minus;&mu;)/&sigma;) &minus; &Phi;((a&minus;&mu;)/&sigma;)</div>
+  </div>
+
+  <div class="sub-title">Notacion z&#945; y cuantiles</div>
+  <div class="card g">
+    <p><strong>z&#945;</strong> es el valor de Z que tiene &alpha; de su area a la izquierda: P(Z &lt; z&#945;) = &alpha;.</p>
+    <p>Para calcular X&#945; donde X ~ N(&mu;, &sigma;):</p>
+    <div class="formula">En R: <code>qnorm(p, mean=&mu;, sd=&sigma;)</code><br>donde p es la probabilidad acumulada a la izquierda</div>
+    <table>
+      <tr><th>Probabilidad</th><th>Formula</th><th>En R</th></tr>
+      <tr><td>P(X &le; a)</td><td>&Phi;((a&minus;&mu;)/&sigma;)</td><td><code>pnorm(a, &mu;, &sigma;)</code></td></tr>
+      <tr><td>P(X &gt; a)</td><td>1 &minus; &Phi;((a&minus;&mu;)/&sigma;)</td><td><code>pnorm(a, &mu;, &sigma;, lower.tail=FALSE)</code></td></tr>
+      <tr><td>P(a &lt; X &lt; b)</td><td>&Phi;(z&#8322;) &minus; &Phi;(z&#8321;)</td><td><code>pnorm(b,&mu;,&sigma;) &minus; pnorm(a,&mu;,&sigma;)</code></td></tr>
+      <tr><td>Percentil p</td><td>&mu; + z&#7683; &middot; &sigma;</td><td><code>qnorm(p, &mu;, &sigma;)</code></td></tr>
+    </table>
+  </div>
+
+  <div class="sub-title">Regla 68-95-99.7</div>
+  <div class="card y">
+    <table>
+      <tr><th>Intervalo</th><th>% de datos</th><th>Descripcion</th></tr>
+      <tr><td>&mu; &plusmn; 1&sigma;</td><td>&asymp; 68%</td><td>La mayoria de los datos</td></tr>
+      <tr><td>&mu; &plusmn; 2&sigma;</td><td>&asymp; 95%</td><td>Casi todos</td></tr>
+      <tr><td>&mu; &plusmn; 3&sigma;</td><td>&asymp; 99.7%</td><td>Practicamente todos</td></tr>
+    </table>
+  </div>
+
+  <div class="sub-title">Ejemplo 4.25 &mdash; Resistencia de componentes electronicos</div>
+  <div class="card g">
+    <p>Resistencia ~ N(&mu;, &sigma;). Datos: P(X &le; 0.5) = 0.50 y P(X &ge; 0.628) = 0.10.</p>
+    <p><strong>(a) Hallar &mu; y &sigma;:</strong></p>
+    <div class="formula">P(X &le; 0.5) = 0.50 &rarr; la mediana = la media &rarr; <em>&mu; = 0.5 &ohm;</em></div>
+    <div class="formula">P(X &ge; 0.628) = 0.10 &rarr; P(X &le; 0.628) = 0.90 &rarr; z = qnorm(0.90) &asymp; 1.2816<br>(0.628 &minus; 0.5)/&sigma; = 1.2816 &rarr; <em>&sigma; = 0.128/1.2816 &asymp; 0.1</em></div>
+    <p><strong>(b) P(X &lt; 0.7):</strong></p>
+    <div class="formula">Z = (0.7 &minus; 0.5)/0.1 = 2.0 &rarr; P(Z &lt; 2) = 0.9772<br>En R: <code>pnorm(0.7, 0.5, 0.1)</code></div>
+    <p><strong>(c) De 20 componentes, P(al menos 19 con resistencia &lt; 0.7&ohm;):</strong></p>
+    <div class="formula">p = 0.9772, n = 20, X ~ Bin(20, 0.9772)<br>P(X &ge; 19) = P(X=19) + P(X=20)<br>En R: <code>pbinom(18, 20, 0.9772, lower.tail=FALSE)</code></div>
+  </div>
+
+  <div class="sub-title">Aproximaciones a la Normal</div>
+  <div class="two-col">
+    <div class="card p"><strong>Binomial &rarr; Normal</strong><p>Cuando n&middot;&pi; &ge; 5 y n&middot;(1&minus;&pi;) &ge; 5:</p><div class="formula">X ~ N(n&pi;, n&pi;(1&minus;&pi;))</div><p style="font-size:.85rem">Aplicar correccion de continuidad &plusmn;0.5</p></div>
+    <div class="card p"><strong>Poisson &rarr; Normal</strong><p>Cuando &lambda; &ge; 30:</p><div class="formula">X ~ N(&lambda;, &lambda;)</div></div>
+  </div>
+
+  <div class="rem">
+    <strong>Ejemplo de los apuntes (estandarizacion):</strong> &mu;=53, &sigma;=2.4, pnorm(0.75)=0.6744<br>
+    (x&minus;53)/2.4 = 0.675 &rarr; x&minus;53 = 1.62 &rarr; <strong>x = 54.62</strong>
+  </div>
+</div>
+
+<!-- Q-Q PLOT -->
+<div id="qqplot" class="section">
+  <div class="section-title">&#128200; 13. Q-Q Plot (Grafico Cuantil-Cuantil)</div>
+  <div class="card y">
+    <p>El <strong>Q-Q plot</strong> es uno de los procedimientos graficos mas utiles para verificar si los datos siguen una distribucion normal. Compara los cuantiles de los datos con los cuantiles teoricos de la Normal estandar.</p>
+  </div>
+  <div class="card b">
+    <p><strong>Funciones en R:</strong></p>
+    <ul>
+      <li><code>qqnorm()</code>: calcula los cuantiles de los puntos (i&minus;1/2)/n para n &gt; 10</li>
+      <li><code>qqline()</code>: traza la linea de referencia conectando los cuantiles (Q1 y Q3)</li>
+    </ul>
+    <p><strong>Como interpretarlo:</strong></p>
+    <ul>
+      <li>Si los puntos siguen aproximadamente la linea diagonal &rarr; <strong>los datos son normales</strong></li>
+      <li>Desviaciones sistematicas en los extremos &rarr; <strong>colas mas pesadas o ligeras</strong> que la Normal</li>
+      <li>Curva en S &rarr; <strong>asimetria</strong> en los datos</li>
+    </ul>
+  </div>
+  <div class="rem">
+    <strong>Ejemplo (Figura 4.23):</strong> Puntuaciones de 20 universitarios. Los puntos siguen la linea diagonal de forma bastante ajustada, lo que indica que los datos son aproximadamente normales, con un ligero alejamiento en el extremo superior.
+  </div>
+</div>
+
+<!-- ══════ CAPITULO 5 — DISTRIBUCIONES MULTIVARIADAS ══════ -->
+<div class="chapter-header">
+  <span class="ch-badge">Capitulo 5</span>
+  <h2>Distribuciones de Probabilidad Multivariadas</h2>
+</div>
+
+<div id="multi" class="section">
+  <div class="section-title">&#128279; 14. Distribuciones Multivariadas &mdash; Introduccion</div>
+  <div class="card y">
+    <p>En un mismo espacio muestral se puede definir <strong>mas de una variable aleatoria</strong>.</p>
+    <p style="font-size:.88rem">Ejemplo clasico &mdash; lanzar dos dados: X = suma, Y = producto, V = |resta|.</p>
+  </div>
+  <div class="sub-title">Funcion de Probabilidad Conjunta (discreta)</div>
+  <div class="card b">
+    <div class="formula"><div class="lbl">Definicion</div><div class="big">p&#7819;&#7822;(x,y) = P(X = x, Y = y)</div></div>
+    <p><strong>Propiedades:</strong></p>
+    <ul>
+      <li>p&#7819;&#7822;(x,y) &ge; 0 para todo x e y</li>
+      <li>&sum;&#8339; &sum;&#8342; p&#7819;&#7822;(x,y) = 1</li>
+      <li>P[(X,Y) &isin; A] = &sum;&sum;<sub>(x,y)&isin;A</sub> p&#7819;&#7822;(x,y)</li>
+    </ul>
+  </div>
+  <div class="sub-title">Distribuciones Marginales</div>
+  <div class="card p">
+    <p>Se obtienen <strong>sumando sobre la otra variable</strong>:</p>
+    <div class="two-col">
+      <div class="formula">p&#7819;(x) = &sum;&#8342; p&#7819;&#7822;(x,y)<br><small style="color:var(--muted)">suma de fila / total</small></div>
+      <div class="formula">p&#7822;(y) = &sum;&#8339; p&#7819;&#7822;(x,y)<br><small style="color:var(--muted)">suma de columna / total</small></div>
+    </div>
+  </div>
+  <div class="sub-title">Probabilidad Condicional Multivariada</div>
+  <div class="card g">
+    <div class="formula"><div class="lbl">Probabilidad condicional de X dado Y=y</div><div class="big">p&#7819;|&#7822;(x|y) = <em>p&#7819;&#7822;(x,y)</em> / p&#7822;(y)</div></div>
+    <p style="font-size:.88rem">Ejemplo: P(X=3 | Y=4) = (5/200) / (14/200) = 5/14 &asymp; 0.357</p>
+  </div>
+  <div class="sub-title">Ejemplo 1 &mdash; Notas Calculo III y Algebra Lineal</div>
+  <div class="card b">
+    <p>200 graduados en matematicas. X = nota Calculo III, Y = nota Algebra Lineal.</p>
+    <table>
+      <tr><th></th><th>Y=4</th><th>Y=3</th><th>Y=2</th><th>p&#7819;(x)</th></tr>
+      <tr><td><strong>X=4</strong></td><td>2</td><td>13</td><td>6</td><td>21/200 = 0.105</td></tr>
+      <tr><td><strong>X=3</strong></td><td>5</td><td>85</td><td>40</td><td>130/200 = 0.65</td></tr>
+      <tr><td><strong>X=2</strong></td><td>7</td><td>33</td><td>9</td><td>49/200 = 0.245</td></tr>
+      <tr><td><strong>p&#7822;(y)</strong></td><td>14/200</td><td>131/200</td><td>55/200</td><td>1</td></tr>
+    </table>
+    <div class="formula">(a) P(Y&ge;3) = (2+5+7+13+85+33)/200 = 145/200 = 0.725</div>
+    <div class="formula">(b) P(X&ge;3) = (2+13+6+5+85+40)/200 = 151/200 = 0.755</div>
+    <div class="formula">(c) P(X&ge;3, Y&ge;3) = (2+5+13+85)/200 = 105/200 = 0.525</div>
+  </div>
+</div>
+
+<div id="indep" class="section">
+  <div class="section-title">&#9878;&#65039; 15. Independencia de Variables Aleatorias</div>
+  <div class="card b">
+    <p>Las v.a. X e Y son <strong>independientes</strong> si para <em>todos</em> los posibles valores:</p>
+    <div class="formula"><div class="lbl">Condicion de independencia</div><div class="big">p&#7819;&#7822;(x,y) = p&#7819;(x) &middot; p&#7822;(y)</div></div>
+  </div>
+  <div class="warn"><strong>Importante:</strong> Basta con que <em>un solo par (x,y)</em> no cumpla la condicion para concluir que son <strong>dependientes</strong>.</div>
+  <div class="sub-title">Ejemplo 1(d) &mdash; Comprobacion</div>
+  <div class="card p">
+    <p>Par (X=4, Y=4): nota A en ambas asignaturas.</p>
+    <div class="formula">p&#7819;&#7822;(4,4) = 2/200 = 0.01</div>
+    <div class="formula">p&#7819;(4) &middot; p&#7822;(4) = (21/200) &middot; (14/200) = 294/40000 &asymp; 0.00735</div>
+    <div class="formula" style="border-color:var(--a3);color:var(--a3)">0.01 &ne; 0.00735 &rarr; X e Y son DEPENDIENTES</div>
+  </div>
+</div>
+
+<div id="cov" class="section">
+  <div class="section-title">&#128208; 16. Covarianza</div>
+  <div class="card y">
+    <p>Mide el <strong>grado de dependencia lineal</strong> entre X e Y.</p>
+    <div class="formula"><div class="lbl">Definicion</div><div class="big">Cov[X,Y] = E[(X&minus;&mu;&#8339;)(Y&minus;&mu;&#8342;)]</div></div>
+    <div class="formula"><div class="lbl">Atajo de calculo</div><div class="big">Cov[X,Y] = <em>E[X&middot;Y]</em> &minus; E[X]&middot;E[Y]</div></div>
+  </div>
+  <div class="card b">
+    <table>
+      <tr><th>Cov[X,Y]</th><th>Interpretacion</th></tr>
+      <tr><td style="color:var(--a4)">&gt; 0</td><td>Cuando X crece, Y tambien tiende a crecer</td></tr>
+      <tr><td style="color:var(--a3)">&lt; 0</td><td>Cuando X crece, Y tiende a decrecer</td></tr>
+      <tr><td style="color:var(--muted)">= 0</td><td>No hay relacion lineal (pueden ser dependientes)</td></tr>
+    </table>
+  </div>
+  <div class="warn"><strong>Trampa:</strong> Cov=0 NO implica independencia. Ver Ejemplo 2 a continuacion.</div>
+  <div class="sub-title">Ejemplo 2 &mdash; Cov=0 pero dependientes</div>
+  <div class="card p">
+    <table>
+      <tr><th></th><th>Y=&minus;1</th><th>Y=0</th><th>Y=1</th><th>p&#7819;(x)</th></tr>
+      <tr><td><strong>X=&minus;1</strong></td><td>1/8</td><td>1/8</td><td>1/8</td><td>3/8</td></tr>
+      <tr><td><strong>X=0</strong></td><td>1/8</td><td>0</td><td>1/8</td><td>2/8</td></tr>
+      <tr><td><strong>X=1</strong></td><td>1/8</td><td>1/8</td><td>1/8</td><td>3/8</td></tr>
+      <tr><td><strong>p&#7822;(y)</strong></td><td>3/8</td><td>2/8</td><td>3/8</td><td>1</td></tr>
+    </table>
+    <div class="formula">E[X]=0, E[Y]=0, E[XY]=0 &rarr; Cov[X,Y]=0</div>
+    <div class="formula" style="color:var(--a3)">Pero: p&#7819;&#7822;(1,1)=1/8 &ne; p&#7819;(1)&middot;p&#7822;(1)=(3/8)(3/8)=9/64 &rarr; DEPENDIENTES</div>
+    <div class="rem"><strong>Conclusion:</strong> Cov=0 NO implica independencia. Este ejemplo lo demuestra.</div>
+  </div>
+</div>
+
+<div id="corr" class="section">
+  <div class="section-title">&#128201; 17. Coeficiente de Correlacion</div>
+  <div class="card b">
+    <p>Version <strong>sin unidades</strong> de la covarianza. Siempre entre &minus;1 y +1.</p>
+    <div class="formula"><div class="lbl">Coeficiente de correlacion de Pearson</div><div class="big">&rho;&#7819;&#7822; = <em>Cov[X,Y]</em> / (&sigma;&#8339; &middot; &sigma;&#8342;)</div></div>
+  </div>
+  <div class="card y">
+    <table>
+      <tr><th>&rho;</th><th>Interpretacion</th></tr>
+      <tr><td style="color:var(--a3)">&minus;1</td><td>Relacion lineal negativa perfecta</td></tr>
+      <tr><td style="color:var(--a3)">&minus;1 &lt; &rho; &lt; 0</td><td>Relacion lineal negativa parcial</td></tr>
+      <tr><td style="color:var(--muted)">0</td><td>Sin relacion lineal (puede haber dependencia no lineal)</td></tr>
+      <tr><td style="color:var(--a4)">0 &lt; &rho; &lt; 1</td><td>Relacion lineal positiva parcial</td></tr>
+      <tr><td style="color:var(--a4)">+1</td><td>Relacion lineal positiva perfecta</td></tr>
+    </table>
+  </div>
+  <div class="sub-title">Ejemplo &mdash; Dataset 1: &mu;&#8339;=93, &mu;&#8342;=100, Cov=280</div>
+  <div class="card g">
+    <div class="formula">Var(X) = 9090 &minus; 93&#178; = 441 &rarr; &sigma;&#8339; = 21</div>
+    <div class="formula">Var(Y) = 10200 &minus; 100&#178; = 200 &rarr; &sigma;&#8342; = &radic;200 &asymp; 14.142</div>
+    <div class="formula" style="color:var(--a4)">&rho; = 280 / (21 &times; 14.142) &asymp; 0.943 &rarr; Relacion lineal positiva muy fuerte</div>
+  </div>
+</div>
+
+<div id="contingencia" class="section">
+  <div class="section-title">&#128203; 18. Tablas de Contingencia</div>
+  <div class="card y"><p>Muestran la <strong>distribucion conjunta de dos variables discretas</strong>. Las celdas interiores son frecuencias conjuntas; los totales de fila y columna son las marginales.</p></div>
+  <div class="sub-title">Test &chi;&#178; de independencia</div>
+  <div class="card p">
+    <div class="formula">&chi;&#178; = &sum; (O&#7522;&#8408; &minus; E&#7522;&#8408;)&#178; / E&#7522;&#8408;</div>
+    <div class="formula">E&#7522;&#8408; = (Total fila i &times; Total col. j) / Total general</div>
+    <p>gl = (num. filas &minus; 1) &times; (num. columnas &minus; 1). Si &chi;&#178; &gt; &chi;&#178;<sub>critico</sub> &rarr; variables <strong>dependientes</strong>.</p>
+  </div>
+</div>
+
+<div id="inferencia" class="section">
+  <div class="section-title">&#128269; 19. Inferencia Estadistica</div>
+  <div class="sub-title">Estimacion puntual</div>
+  <div class="card y">
+    <table>
+      <tr><th>Parametro</th><th>Estimador muestral</th></tr>
+      <tr><td>&mu; (media)</td><td>x&#772; = &sum;x&#7522;/n</td></tr>
+      <tr><td>&sigma;&#178; (varianza)</td><td>s&#178; = &sum;(x&#7522;&minus;x&#772;)&#178;/(n&minus;1)</td></tr>
+      <tr><td>p (proporcion)</td><td>p&#770; = k/n</td></tr>
+    </table>
+  </div>
+  <div class="sub-title">Intervalos de Confianza</div>
+  <div class="card b">
+    <div class="formula"><div class="lbl">IC para &mu; con &sigma; conocida</div>IC = x&#772; &plusmn; Z&#945;/2 &middot; &sigma;/&radic;n</div>
+    <div class="formula"><div class="lbl">IC para &mu; con &sigma; desconocida (t-Student)</div>IC = x&#772; &plusmn; t&#945;/2,&nbsp;n&minus;1 &middot; s/&radic;n</div>
+    <div class="formula"><div class="lbl">IC para proporcion</div>IC = p&#770; &plusmn; Z&#945;/2 &middot; &radic;(p&#770;(1&minus;p&#770;)/n)</div>
+  </div>
+  <div class="rem"><strong>Valores Z:</strong> 90% &rarr; 1.645 &nbsp;|&nbsp; 95% &rarr; 1.960 &nbsp;|&nbsp; 99% &rarr; 2.576</div>
+  <div class="sub-title">Contraste de Hipotesis</div>
+  <div class="card g">
+    <div class="step"><div class="stepn">1</div><div class="stepc">Plantear H&#8320; (nula) y H&#8321; (alternativa)</div></div>
+    <div class="step"><div class="stepn">2</div><div class="stepc">Elegir estadistico (Z, t, &chi;&#178;, F)</div></div>
+    <div class="step"><div class="stepn">3</div><div class="stepc">Calcular p-valor o estadistico de contraste</div></div>
+    <div class="step"><div class="stepn">4</div><div class="stepc">Si p-valor &lt; &alpha; &rarr; rechazar H&#8320;</div></div>
+  </div>
+</div>
+
+<!-- ══════ CHULETA FINAL ══════ -->
+<div id="chuleta" class="section">
+  <div class="section-title">&#9889; 20. Chuleta Final &mdash; Todas las Formulas</div>
+
+  <div class="sub-title">Todas las distribuciones de un vistazo</div>
+  <div class="card b">
+    <table>
+      <tr><th>Distribucion</th><th>Parametros</th><th>P(X=x) o f(x)</th><th>E[X]</th><th>Var(X)</th></tr>
+      <tr><td><span class="badge by">Unif. Discreta</span></td><td>n</td><td>1/n</td><td>(n+1)/2 *</td><td>(n&#178;&minus;1)/12 *</td></tr>
+      <tr><td><span class="badge bb">Bernoulli</span></td><td>&pi;</td><td>&pi;<sup>x</sup>(1&minus;&pi;)<sup>1&minus;x</sup></td><td>&pi;</td><td>&pi;(1&minus;&pi;)</td></tr>
+      <tr><td><span class="badge bb">Binomial</span></td><td>n, &pi;</td><td>C(n,x)&pi;<sup>x</sup>(1&minus;&pi;)<sup>n&minus;x</sup></td><td>n&pi;</td><td>n&pi;(1&minus;&pi;)</td></tr>
+      <tr><td><span class="badge bp">Poisson</span></td><td>&lambda;</td><td>&lambda;<sup>x</sup>e<sup>&minus;&lambda;</sup>/x!</td><td>&lambda;</td><td>&lambda;</td></tr>
+      <tr><td><span class="badge bg">Unif. Continua</span></td><td>a, b</td><td>1/(b&minus;a)</td><td>(a+b)/2</td><td>(b&minus;a)&#178;/12</td></tr>
+      <tr><td><span class="badge bg">Exponencial</span></td><td>&lambda;</td><td>&lambda;e<sup>&minus;&lambda;x</sup></td><td>1/&lambda;</td><td>1/&lambda;&#178;</td></tr>
+      <tr><td><span class="badge by">Gamma</span></td><td>&alpha;, &lambda;</td><td>[&lambda;<sup>&alpha;</sup>/&Gamma;(&alpha;)]x<sup>&alpha;&minus;1</sup>e<sup>&minus;&lambda;x</sup></td><td>&alpha;/&lambda;</td><td>&alpha;/&lambda;&#178;</td></tr>
+      <tr><td><span class="badge bp">Normal</span></td><td>&mu;, &sigma;</td><td>(1/&sigma;&radic;2&pi;)e<sup>&minus;(x&minus;&mu;)&#178;/2&sigma;&#178;</sup></td><td>&mu;</td><td>&sigma;&#178;</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:8px">* Para x&#7522; = i (i=1,&hellip;,n)</p>
+  </div>
+
+  <div class="sub-title">Formulas multivariadas</div>
+  <div class="card y">
+    <table>
+      <tr><th>Concepto</th><th>Formula</th></tr>
+      <tr><td>Prob. conjunta</td><td>p&#7819;&#7822;(x,y) = P(X=x, Y=y)</td></tr>
+      <tr><td>Marginal X</td><td>p&#7819;(x) = &sum;&#8342; p&#7819;&#7822;(x,y)</td></tr>
+      <tr><td>Marginal Y</td><td>p&#7822;(y) = &sum;&#8339; p&#7819;&#7822;(x,y)</td></tr>
+      <tr><td>Condicional X|Y</td><td>p&#7819;|&#7822;(x|y) = p&#7819;&#7822;(x,y) / p&#7822;(y)</td></tr>
+      <tr><td>Independencia</td><td>p&#7819;&#7822;(x,y) = p&#7819;(x) &middot; p&#7822;(y) para todo (x,y)</td></tr>
+      <tr><td>Covarianza</td><td>Cov[X,Y] = E[XY] &minus; E[X]&middot;E[Y]</td></tr>
+      <tr><td>Correlacion</td><td>&rho; = Cov[X,Y] / (&sigma;&#8339; &middot; &sigma;&#8342;)</td></tr>
+    </table>
+  </div>
+
+  <div class="sub-title">Relaciones de implicacion clave</div>
+  <div class="card g">
+    <table>
+      <tr><th>Si&hellip;</th><th>Entonces&hellip;</th><th>Al reves?</th></tr>
+      <tr><td>X,Y independientes</td><td>Cov[X,Y]=0</td><td style="color:var(--a3)">NO siempre</td></tr>
+      <tr><td>X,Y independientes</td><td>&rho;=0</td><td style="color:var(--a3)">NO siempre</td></tr>
+      <tr><td>X,Y independientes</td><td>E[XY]=E[X]&middot;E[Y]</td><td style="color:var(--a3)">NO siempre</td></tr>
+      <tr><td>Cov[X,Y] &ne; 0</td><td>Dependientes</td><td style="color:var(--a4)">Si (por definicion)</td></tr>
+      <tr><td>&alpha;=1 en Gamma</td><td>Exponencial</td><td style="color:var(--a4)">Si</td></tr>
+      <tr><td>n exitos Bernoulli</td><td>Binomial(n,&pi;)</td><td style="color:var(--a4)">Si</td></tr>
+    </table>
+  </div>
+
+  <div class="sub-title">Normal &mdash; resumen de calculos</div>
+  <div class="card p">
+    <div class="formula"><div class="lbl">Estandarizacion: X ~ N(&mu;,&sigma;) &rarr; Z = (X&minus;&mu;)/&sigma; ~ N(0,1)</div></div>
+    <table>
+      <tr><th>Probabilidad</th><th>Formula</th><th>En R</th></tr>
+      <tr><td>P(X &le; a)</td><td>&Phi;((a&minus;&mu;)/&sigma;)</td><td><code>pnorm(a, &mu;, &sigma;)</code></td></tr>
+      <tr><td>P(X &gt; a)</td><td>1&minus;&Phi;((a&minus;&mu;)/&sigma;)</td><td><code>pnorm(a,&mu;,&sigma;,lower.tail=F)</code></td></tr>
+      <tr><td>P(a&lt;X&lt;b)</td><td>&Phi;(z&#8322;)&minus;&Phi;(z&#8321;)</td><td><code>pnorm(b,&mu;,&sigma;)&minus;pnorm(a,&mu;,&sigma;)</code></td></tr>
+      <tr><td>Percentil p</td><td>&mu; + z&#7683;&middot;&sigma;</td><td><code>qnorm(p, &mu;, &sigma;)</code></td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- ERRORES TIPICOS -->
+<div id="errores" class="section">
+  <div class="section-title">&#128683; 21. Errores Tipicos de Examen &mdash; No los cometas</div>
+  <div class="card p"><p><strong>Error 1 &mdash; Confundir E[X] con E[X&#178;]:</strong> Var(X) = E[X&#178;] &minus; (E[X])&#178;. Nunca Var(X) = E[X&#178;] directamente.</p></div>
+  <div class="card p"><p><strong>Error 2 &mdash; Cov=0 implica independencia:</strong> FALSO. Solo al reves: independencia &rArr; Cov=0.</p></div>
+  <div class="card p"><p><strong>Error 3 &mdash; Olvidar el factorial en Poisson:</strong> P(X=k) = &lambda;<sup>k</sup> e<sup>&minus;&lambda;</sup> / <u>k!</u>. El factorial es obligatorio.</p></div>
+  <div class="card p"><p><strong>Error 4 &mdash; No escalar &lambda; en Poisson:</strong> Si &lambda;=2/minuto y preguntan por 1 hora, &lambda;<sub>hora</sub> = 2&times;60 = 120.</p></div>
+  <div class="card p"><p><strong>Error 5 &mdash; Aplicar sin memoria donde no corresponde:</strong> Solo Exponencial (continua) y Geometrica (discreta) tienen la propiedad sin memoria.</p></div>
+  <div class="card p"><p><strong>Error 6 &mdash; No reconocer Gamma(&alpha;=1,&lambda;) = Exp(&lambda;):</strong> Son la misma distribucion. La Exponencial es un caso especial de la Gamma.</p></div>
+  <div class="card p"><p><strong>Error 7 &mdash; P(X&lt;a) vs P(X&le;a) en discretas:</strong> En continuas son iguales. En discretas NO: P(X&lt;3) &ne; P(X&le;3).</p></div>
+  <div class="card p"><p><strong>Error 8 &mdash; Usar Binomial sin verificar condiciones:</strong> n fijo, &pi; constante, ensayos independientes, solo 2 resultados posibles.</p></div>
+  <div class="card p"><p><strong>Error 9 &mdash; Calcular mal el combinatorio:</strong> C(n,k) = n! / (k!(n&minus;k)!). Ejemplo: C(5,2) = 120/(2&times;6) = 10, NO 20.</p></div>
+  <div class="card p"><p><strong>Error 10 &mdash; Dividir celda entre total fila:</strong> p&#7819;&#7822;(x,y) = celda / <u>total general</u>. La marginal p&#7819;(x) = total fila / total general.</p></div>
+</div>
+
+</div><!-- /container -->
+
+<!-- TEST INTERACTIVO -->
+<div id="test" style="background:#0a0d1a;border-top:1px solid #252d4a;padding:60px 0;">
+<div style="max-width:800px;margin:0 auto;padding:0 24px;">
+  <div style="text-align:center;margin-bottom:36px;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:#e8b86d;margin-bottom:8px;">&#127942; Test de Examen &mdash; 20 Preguntas</h2>
+    <p style="color:#8892b0;">Preguntas tipo examen con explicacion de cada respuesta.</p>
+    <div id="test-score-bar" style="display:none;margin-top:16px;background:#1a1f38;border-radius:20px;height:12px;overflow:hidden;"><div id="test-score-fill" style="height:100%;border-radius:20px;transition:width .6s;width:0%;"></div></div>
+    <div id="test-score-text" style="display:none;font-weight:700;font-size:1.1rem;margin-top:10px;"></div>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="text-align:center;margin-top:28px;">
+    <button id="btn-check" onclick="checkQuiz()" style="display:none;background:linear-gradient(135deg,#e8b86d,#e86d8a);color:#000;border:none;padding:14px 42px;border-radius:30px;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.04em;">CORREGIR TEST</button>
+    <button id="btn-reset" onclick="resetQuiz()" style="display:none;background:#1a1f38;color:#e8eaf6;border:1px solid #252d4a;padding:14px 42px;border-radius:30px;font-size:1rem;font-weight:700;cursor:pointer;margin-left:12px;">REINTENTAR</button>
+  </div>
+</div>
+</div>
+
+<!-- CALCULADORA NORMAL -->
+<div id="calculadora" style="background:#0d0f1a;border-top:1px solid #252d4a;padding:60px 0;">
+<div style="max-width:800px;margin:0 auto;padding:0 24px;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:#6d9ee8;margin-bottom:8px;">&#128300; Calculadora Normal Interactiva</h2>
+    <p style="color:#8892b0;">Calcula probabilidades de la distribucion N(&mu;,&sigma;) al instante.</p>
+  </div>
+  <div style="background:#1a1f38;border:1px solid #252d4a;border-radius:16px;padding:28px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+      <div><label style="color:#8892b0;font-size:.85rem;display:block;margin-bottom:6px;">Media (&mu;)</label><input id="c-mu" type="number" value="0" step="0.1" style="width:100%;background:#0a0d1a;border:1px solid #252d4a;border-radius:8px;padding:10px 14px;color:#e8eaf6;font-size:1rem;box-sizing:border-box;"></div>
+      <div><label style="color:#8892b0;font-size:.85rem;display:block;margin-bottom:6px;">Desv. tipica (&sigma;)</label><input id="c-sigma" type="number" value="1" step="0.1" min="0.01" style="width:100%;background:#0a0d1a;border:1px solid #252d4a;border-radius:8px;padding:10px 14px;color:#e8eaf6;font-size:1rem;box-sizing:border-box;"></div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <label style="color:#8892b0;font-size:.85rem;display:block;margin-bottom:8px;">Tipo de calculo</label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <button onclick="setCalcType('left')" id="ct-left" style="padding:8px 16px;border-radius:20px;border:1px solid #6d9ee8;background:rgba(109,158,232,.2);color:#6d9ee8;cursor:pointer;font-size:.85rem;font-weight:600;">P(X &le; a)</button>
+        <button onclick="setCalcType('right')" id="ct-right" style="padding:8px 16px;border-radius:20px;border:1px solid #252d4a;background:transparent;color:#8892b0;cursor:pointer;font-size:.85rem;font-weight:600;">P(X &ge; a)</button>
+        <button onclick="setCalcType('between')" id="ct-between" style="padding:8px 16px;border-radius:20px;border:1px solid #252d4a;background:transparent;color:#8892b0;cursor:pointer;font-size:.85rem;font-weight:600;">P(a &le; X &le; b)</button>
+        <button onclick="setCalcType('quantile')" id="ct-quantile" style="padding:8px 16px;border-radius:20px;border:1px solid #252d4a;background:transparent;color:#8892b0;cursor:pointer;font-size:.85rem;font-weight:600;">Percentil p</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+      <div><label id="la-label" style="color:#8892b0;font-size:.85rem;display:block;margin-bottom:6px;">Valor a</label><input id="c-a" type="number" value="1" step="0.01" style="width:100%;background:#0a0d1a;border:1px solid #252d4a;border-radius:8px;padding:10px 14px;color:#e8eaf6;font-size:1rem;box-sizing:border-box;"></div>
+      <div id="c-b-wrap" style="display:none;"><label style="color:#8892b0;font-size:.85rem;display:block;margin-bottom:6px;">Valor b</label><input id="c-b" type="number" value="2" step="0.01" style="width:100%;background:#0a0d1a;border:1px solid #252d4a;border-radius:8px;padding:10px 14px;color:#e8eaf6;font-size:1rem;box-sizing:border-box;"></div>
+    </div>
+    <button onclick="calcNormal()" style="width:100%;background:linear-gradient(135deg,#6d9ee8,#6de8b8);color:#000;border:none;padding:13px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;">CALCULAR</button>
+    <div id="calc-result" style="display:none;margin-top:20px;background:#0a0d1a;border:1px solid #6de8b8;border-radius:10px;padding:18px;text-align:center;">
+      <div id="calc-formula" style="font-family:'Fira Code',monospace;font-size:.88rem;color:#8892b0;margin-bottom:8px;"></div>
+      <div id="calc-answer" style="font-size:1.6rem;font-weight:700;color:#6de8b8;"></div>
+      <div id="calc-z" style="font-size:.85rem;color:#6d9ee8;margin-top:6px;"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- BUSCADOR -->
+<div id="buscador" style="background:#131629;border-top:1px solid #252d4a;padding:60px 0;">
+<div style="max-width:800px;margin:0 auto;padding:0 24px;">
+  <div style="text-align:center;margin-bottom:22px;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:#6de8b8;margin-bottom:8px;">&#128270; Buscador de Formulas</h2>
+    <p style="color:#8892b0;">Escribe cualquier termino: distribucion, formula, concepto...</p>
+  </div>
+  <input id="search-input" oninput="doSearch(this.value)" placeholder="Ej: poisson, covarianza, sin memoria, percentil..." style="width:100%;background:#0a0d1a;border:1px solid #252d4a;border-radius:12px;padding:16px 22px;color:#e8eaf6;font-size:1.05rem;outline:none;box-sizing:border-box;">
+  <div id="search-results" style="margin-top:16px;"></div>
+</div>
+</div>
+
+<!-- WATERMARK -->
+<div style="position:fixed;bottom:50%;right:-55px;transform:rotate(90deg) translateX(50%);z-index:998;pointer-events:none;user-select:none;opacity:.07;font-family:serif;font-size:1rem;font-weight:900;color:#e8b86d;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;">Bogdan Cosciug &bull; Bogdan Cosciug &bull; Bogdan Cosciug</div>
+<div style="position:fixed;top:50%;left:-55px;transform:rotate(-90deg) translateX(-50%);z-index:998;pointer-events:none;user-select:none;opacity:.07;font-family:serif;font-size:1rem;font-weight:900;color:#e8b86d;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;">Bogdan Cosciug &bull; Bogdan Cosciug &bull; Bogdan Cosciug</div>
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:997;overflow:hidden;">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-family:serif;font-size:clamp(1.2rem,3vw,2rem);font-weight:900;color:#e8b86d;opacity:.04;white-space:nowrap;letter-spacing:.15em;text-transform:uppercase;text-align:center;line-height:3.5;">Bogdan Cosciug<br>Bogdan Cosciug<br>Bogdan Cosciug<br>Bogdan Cosciug<br>Bogdan Cosciug</div>
+</div>
+<!-- FLOATING BUTTONS -->
+<div style="position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:999;">
+  <a href="#test" style="background:#e8b86d;color:#000;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.3rem;box-shadow:0 4px 20px rgba(232,184,109,.5);" title="Test">&#127942;</a>
+  <a href="#calculadora" style="background:#6d9ee8;color:#000;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.3rem;box-shadow:0 4px 20px rgba(109,158,232,.5);" title="Calculadora">&#128300;</a>
+  <a href="#buscador" style="background:#6de8b8;color:#000;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.3rem;box-shadow:0 4px 20px rgba(109,232,184,.5);" title="Buscar">&#128270;</a>
+  <a href="#chuleta" style="background:#e86d8a;color:#000;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.3rem;box-shadow:0 4px 20px rgba(232,109,138,.5);" title="Chuleta">&#9889;</a>
+</div>
+
+<script>
+const questions=[
+  {q:"Si X ~ Bin(10, 0.5), cual es E[X]?",opts:["2","5","10","0.5"],ans:1,exp:"E[X] = n&pi; = 10 &times; 0.5 = 5."},
+  {q:"La distribucion de Poisson tiene E[X] = Var[X] = ?",opts:["&pi;","n","&lambda;","1/&lambda;"],ans:2,exp:"Tanto la media como la varianza de Poisson son igual a &lambda;."},
+  {q:"Si X ~ Exp(&lambda;), cual es E[X]?",opts:["&lambda;","&lambda;&#178;","1/&lambda;","1/&lambda;&#178;"],ans:2,exp:"E[X]=1/&lambda;. Var[X]=1/&lambda;&#178;."},
+  {q:"Cov[X,Y]=0 implica que X e Y son...",opts:["Independientes","Dependientes","Linealmente independientes","Perfectamente correladas"],ans:2,exp:"Cov=0 solo implica independencia LINEAL. Pueden existir relaciones no lineales."},
+  {q:"Condiciones para aproximar Binomial por Poisson con &lambda;=n&pi;?",opts:["n grande, p cercana a 0.5","&pi; &le; 0.1 y n&pi; &le; 5","n menor que 30","Siempre que n sea grande"],ans:1,exp:"Condiciones: &pi;&le;0.1 y n&pi;&le;5. Entonces Bin(n,&pi;) &asymp; Pois(n&pi;)."},
+  {q:"La propiedad sin memoria la cumple...",opts:["Solo la Normal","Solo la Binomial","Exponencial (continua) y Geometrica (discreta)","Todas las distribuciones continuas"],ans:2,exp:"P(X>t2+t1|X>t1)=P(X>t2). Solo Exponencial y Geometrica la cumplen."},
+  {q:"Si X ~ Gamma(2, 3), cual es E[X]?",opts:["3/2","2/3","6","1/6"],ans:1,exp:"E[X] = &alpha;/&lambda; = 2/3."},
+  {q:"Gamma(&alpha;=1, &lambda;) es equivalente a...",opts:["Normal(&lambda;,1)","Poisson(&lambda;)","Exponencial(&lambda;)","Uniforme(0,&lambda;)"],ans:2,exp:"La Exponencial es un caso especial de la Gamma con &alpha;=1."},
+  {q:"Si X ~ N(50, 4), que vale P(X &le; 50)?",opts:["0","0.25","0.50","1"],ans:2,exp:"La Normal es simetrica respecto a la media. P(X&le;&mu;)=0.5 siempre."},
+  {q:"Para estandarizar X ~ N(&mu;, &sigma;) se usa...",opts:["Z=X/&sigma;","Z=(X+&mu;)/&sigma;","Z=(X-&mu;)/&sigma;","Z=X-&mu;"],ans:2,exp:"Z=(X-&mu;)/&sigma; ~ N(0,1). Restar la media y dividir por la desv. tipica."},
+  {q:"Si X ~ Unif(2, 8), cual es la varianza?",opts:["3","4","3.5","6"],ans:0,exp:"Var=(b-a)&#178;/12=(8-2)&#178;/12=36/12=3."},
+  {q:"En Binomial, la FGM M_X(t) es...",opts:["e^(&lambda;(e^t-1))","(&pi;e^t+1-&pi;)^n","e^(&mu;t+&sigma;&#178;t&#178;/2)","(1-&lambda;^-1t)^-1"],ans:1,exp:"M_X(t)=(&pi;e^t+%)^n donde %=1-&pi;."},
+  {q:"p_XY(x,y)=p_X(x)&middot;p_Y(y) para todo (x,y) implica que X e Y son...",opts:["Correladas","Dependientes","Independientes","Covarianza positiva"],ans:2,exp:"Esa es exactamente la definicion de independencia para v.a."},
+  {q:"Si &rho; = -0.95, esto indica...",opts:["Relacion lineal positiva fuerte","Sin relacion lineal","Relacion lineal negativa muy fuerte","Independencia"],ans:2,exp:"&rho; cercano a -1 indica relacion lineal negativa muy fuerte."},
+  {q:"La marginal p_X(x) se calcula como...",opts:["p_XY(x,y)/p_Y(y)","&sum;_y p_XY(x,y)","&sum;_x p_XY(x,y)","p_XY(x,y)&middot;p_Y(y)"],ans:1,exp:"Se suma la distribucion conjunta sobre todos los valores de Y."},
+  {q:"Grados de libertad del test chi&#178; en tabla 3x4?",opts:["12","6","7","11"],ans:1,exp:"gl=(filas-1)(cols-1)=(3-1)(4-1)=2&times;3=6."},
+  {q:"Si X~Bin(n,&pi;) con n grande y &pi; cerca de 0.5, aproximamos por...",opts:["Pois(n&pi;)","N(n&pi;, n&pi;(1-&pi;))","Exp(1/n)","Gamma(n,&pi;)"],ans:1,exp:"X &asymp; N(n&pi;, n&pi;(1-&pi;)) cuando n&pi;&ge;5 y n(1-&pi;)&ge;5."},
+  {q:"Unif. Discreta xi=i (i=1..n): E[X]=?",opts:["n/2","(n+1)/2","n","(n-1)/2"],ans:1,exp:"E[X]=(n+1)/2. Ejemplo dado 6 caras: (6+1)/2=3.5."},
+  {q:"Si X,Y independientes, Cov[X,Y]=?",opts:["1","Indefinido","0","E[X]+E[Y]"],ans:2,exp:"Independientes &rArr; E[XY]=E[X]E[Y] &rArr; Cov=0."},
+  {q:"Con &lambda;=3 coches/min (Poisson), tiempo medio hasta el primer coche?",opts:["3 minutos","1/3 minuto","6 minutos","9 minutos"],ans:1,exp:"Tiempo hasta primer evento ~ Exp(&lambda;). E[W]=1/&lambda;=1/3 minuto &asymp; 20 segundos."}
+];
+
+let calcType='left';
+
+function buildQuiz(){
+  const c=document.getElementById('quiz-container');
+  c.innerHTML='';
+  questions.forEach((q,i)=>{
+    c.innerHTML+=`<div style="background:#1a1f38;border:1px solid #252d4a;border-radius:12px;padding:20px 24px;margin-bottom:14px;" id="qb${i}">
+      <p style="font-weight:600;color:#e8eaf6;margin-bottom:12px;font-size:.96rem;"><span style="color:#6d9ee8;font-weight:700;">P${i+1}.</span> ${q.q}</p>
+      <div style="display:flex;flex-direction:column;gap:7px;">${q.opts.map((o,j)=>`
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:9px 13px;border-radius:8px;border:1px solid #252d4a;transition:background .15s;" id="opt${i}-${j}">
+          <input type="radio" name="qq${i}" value="${j}" style="accent-color:#e8b86d;width:15px;height:15px;flex-shrink:0;">
+          <span style="color:#c8cce8;font-size:.92rem;">${o}</span>
+        </label>`).join('')}
+      </div>
+      <div id="ex${i}" style="display:none;margin-top:11px;padding:11px 15px;border-radius:8px;font-size:.87rem;"></div>
+    </div>`;
+  });
+  document.getElementById('btn-check').style.display='inline-block';
+  document.getElementById('btn-reset').style.display='none';
+  document.getElementById('test-score-bar').style.display='none';
+  document.getElementById('test-score-text').style.display='none';
+}
+
+function checkQuiz(){
+  let score=0;
+  questions.forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="qq${i}"]:checked`);
+    const ex=document.getElementById(`ex${i}`);
+    document.querySelectorAll(`input[name="qq${i}"]`).forEach(r=>r.disabled=true);
+    if(sel){
+      const v=parseInt(sel.value);
+      if(v===q.ans){
+        score++;
+        document.getElementById(`opt${i}-${v}`).style.cssText+=';background:rgba(109,232,184,.15);border-color:#6de8b8;';
+        ex.style.display='block';ex.style.cssText+='background:rgba(109,232,184,.08);border-left:3px solid #6de8b8;padding:11px 15px;';
+        ex.innerHTML='<strong style="color:#6de8b8">&#10003; Correcto!</strong> '+q.exp;
+      } else {
+        document.getElementById(`opt${i}-${v}`).style.cssText+=';background:rgba(232,109,138,.15);border-color:#e86d8a;';
+        document.getElementById(`opt${i}-${q.ans}`).style.cssText+=';background:rgba(109,232,184,.1);border-color:#6de8b8;';
+        ex.style.display='block';ex.style.cssText+='background:rgba(232,109,138,.08);border-left:3px solid #e86d8a;padding:11px 15px;';
+        ex.innerHTML='<strong style="color:#e86d8a">&#10007; Incorrecto.</strong> '+q.exp;
+      }
+    } else {
+      document.getElementById(`opt${i}-${q.ans}`).style.cssText+=';background:rgba(109,232,184,.08);border-color:#6de8b8;';
+      ex.style.display='block';ex.style.cssText+='background:rgba(232,184,109,.08);border-left:3px solid #e8b86d;padding:11px 15px;';
+      ex.innerHTML='<strong style="color:#e8b86d">Sin respuesta.</strong> Resp. correcta: opcion '+(q.ans+1)+'. '+q.exp;
+    }
+  });
+  const pct=Math.round(score/questions.length*100);
+  document.getElementById('test-score-bar').style.display='block';
+  document.getElementById('test-score-text').style.display='block';
+  const fill=document.getElementById('test-score-fill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=70?'linear-gradient(90deg,#6de8b8,#6d9ee8)':'linear-gradient(90deg,#e8b86d,#e86d8a)';
+  const msg=pct>=90?'&#127942; SOBRESALIENTE':pct>=70?'&#129351; NOTABLE':pct>=50?'&#128218; APROBADO':'&#128197; Sigue repasando';
+  document.getElementById('test-score-text').style.color=pct>=70?'#6de8b8':'#e8b86d';
+  document.getElementById('test-score-text').innerHTML=`${score}/${questions.length} (${pct}%) &mdash; ${msg}`;
+  document.getElementById('btn-check').style.display='none';
+  document.getElementById('btn-reset').style.display='inline-block';
+  document.getElementById('test-score-bar').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetQuiz(){buildQuiz();}
+
+// CALCULADORA NORMAL
+function setCalcType(t){
+  calcType=t;
+  ['left','right','between','quantile'].forEach(x=>{
+    const b=document.getElementById('ct-'+x);
+    b.style.background=x===t?'rgba(109,158,232,.2)':'transparent';
+    b.style.borderColor=x===t?'#6d9ee8':'#252d4a';
+    b.style.color=x===t?'#6d9ee8':'#8892b0';
+  });
+  document.getElementById('c-b-wrap').style.display=t==='between'?'block':'none';
+  document.getElementById('la-label').textContent=t==='quantile'?'Probabilidad p (entre 0 y 1)':'Valor a';
+  document.getElementById('calc-result').style.display='none';
+}
+
+function erf(x){
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const sign=x<0?-1:1;x=Math.abs(x);
+  const t=1/(1+p*x);
+  return sign*(1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x));
+}
+function normalCDF(z){return 0.5*(1+erf(z/Math.sqrt(2)));}
+function normalINV(p){
+  if(p<=0||p>=1)return NaN;
+  const c=[2.515517,0.802853,0.010328];
+  const d=[1.432788,0.189269,0.001308];
+  const q=p<0.5?p:1-p;
+  const t=Math.sqrt(-2*Math.log(q));
+  const z=t-(c[0]+c[1]*t+c[2]*t*t)/(1+d[0]*t+d[1]*t*t+d[2]*t*t*t);
+  return p<0.5?-z:z;
+}
+
+function calcNormal(){
+  const mu=parseFloat(document.getElementById('c-mu').value)||0;
+  const sigma=parseFloat(document.getElementById('c-sigma').value)||1;
+  const a=parseFloat(document.getElementById('c-a').value);
+  const b=parseFloat(document.getElementById('c-b').value)||0;
+  const res=document.getElementById('calc-result');
+  res.style.display='block';
+  let ansText='',formText='',zText='';
+  if(calcType==='left'){
+    const z=(a-mu)/sigma,p=normalCDF(z);
+    ansText='P(X \u2264 '+a+') = '+p.toFixed(6);
+    formText='Z = ('+a+' \u2212 '+mu+') / '+sigma+' = '+z.toFixed(4);
+    zText='En R: pnorm('+a+', '+mu+', '+sigma+')';
+  } else if(calcType==='right'){
+    const z=(a-mu)/sigma,p=1-normalCDF(z);
+    ansText='P(X \u2265 '+a+') = '+p.toFixed(6);
+    formText='Z = ('+a+' \u2212 '+mu+') / '+sigma+' = '+z.toFixed(4);
+    zText='En R: pnorm('+a+', '+mu+', '+sigma+', lower.tail=FALSE)';
+  } else if(calcType==='between'){
+    const z1=(a-mu)/sigma,z2=(b-mu)/sigma,p=normalCDF(z2)-normalCDF(z1);
+    ansText='P('+a+' \u2264 X \u2264 '+b+') = '+p.toFixed(6);
+    formText='Z\u2081='+z1.toFixed(4)+',  Z\u2082='+z2.toFixed(4);
+    zText='En R: pnorm('+b+','+mu+','+sigma+') \u2212 pnorm('+a+','+mu+','+sigma+')';
+  } else {
+    const z=normalINV(a),x=mu+z*sigma;
+    ansText='Percentil '+(a*100).toFixed(0)+'% = '+x.toFixed(6);
+    formText='x = \u03bc + z\u00B7\u03c3 = '+mu+' + '+z.toFixed(4)+' \u00D7 '+sigma;
+    zText='En R: qnorm('+a+', '+mu+', '+sigma+')';
+  }
+  document.getElementById('calc-formula').textContent=formText;
+  document.getElementById('calc-answer').textContent=ansText;
+  document.getElementById('calc-z').textContent=zText;
+}
+
+// BUSCADOR
+const searchDB=[
+  {t:"Bernoulli",s:"bernoulli pi exito fracaso",b:"X~Bernoulli(&pi;). P(X=x)=&pi;<sup>x</sup>(1-&pi;)<sup>1-x</sup>. E[X]=&pi;. Var[X]=&pi;(1-&pi;).",href:"#bernoulli"},
+  {t:"Binomial",s:"binomial n pi combinatorio exitos",b:"X~Bin(n,&pi;). P(X=k)=C(n,k)&pi;<sup>k</sup>(1-&pi;)<sup>n-k</sup>. E[X]=n&pi;. Var=n&pi;(1-&pi;).",href:"#binomial"},
+  {t:"Poisson",s:"poisson lambda eventos tiempo intervalo factorial",b:"X~Pois(&lambda;). P(X=k)=&lambda;<sup>k</sup>e<sup>-&lambda;</sup>/k!. E[X]=Var[X]=&lambda;.",href:"#poisson"},
+  {t:"Exponencial",s:"exponencial lambda tiempo espera sin memoria CDF",b:"X~Exp(&lambda;). f(x)=&lambda;e<sup>-&lambda;x</sup>. F(x)=1-e<sup>-&lambda;x</sup>. E[X]=1/&lambda;. Var=1/&lambda;&#178;. Sin memoria.",href:"#exponencial"},
+  {t:"Gamma",s:"gamma alpha lambda erlang chi cuadrado",b:"X~&Gamma;(&alpha;,&lambda;). E[X]=&alpha;/&lambda;. Var=&alpha;/&lambda;&#178;. Tiempo hasta el &alpha;-esimo evento de Poisson.",href:"#gamma"},
+  {t:"Normal",s:"normal gaussiana campana mu sigma estandar Z",b:"X~N(&mu;,&sigma;). E[X]=&mu;. Var=&sigma;&#178;. Z=(X-&mu;)/&sigma;. Simetrica respecto a la media.",href:"#normal"},
+  {t:"Uniforme Continua",s:"uniforme continua a b igual",b:"X~Unif(a,b). f(x)=1/(b-a). E[X]=(a+b)/2. Var=(b-a)&#178;/12.",href:"#unifcont"},
+  {t:"Uniforme Discreta",s:"uniforme discreta n",b:"P(X=xi)=1/n. E[X]=(n+1)/2*. Var=(n&#178;-1)/12*.",href:"#udiscreta"},
+  {t:"Covarianza",s:"covarianza cov E[XY] dependencia lineal",b:"Cov[X,Y]=E[XY]-E[X]E[Y]. Positiva: crecen juntas. Negativa: sentido contrario. 0: sin relacion lineal.",href:"#cov"},
+  {t:"Correlacion de Pearson",s:"correlacion rho -1 1 pearson",b:"&rho;=Cov[X,Y]/(&sigma;x&middot;&sigma;y). Entre -1 y +1. &rho;=0 no implica independencia.",href:"#corr"},
+  {t:"Independencia",s:"independencia producto marginal p_xy",b:"X,Y independientes &hArr; p_XY(x,y)=p_X(x)&middot;p_Y(y) para todo (x,y).",href:"#indep"},
+  {t:"Probabilidad Condicional",s:"condicional P(B|A) interseccion bayes",b:"P(B|A)=P(A&cap;B)/P(A). Complementario: P(B|A)+P(Bc|A)=1.",href:"#cond"},
+  {t:"Teorema de Bayes",s:"bayes a priori posteriori verosimilitud",b:"P(Ai|B)=P(B|Ai)P(Ai)/&sum;P(B|Aj)P(Aj).",href:"#bayes"},
+  {t:"Distribucion marginal",s:"marginal suma fila columna tabla conjunta",b:"p_X(x)=&sum;_y p_XY(x,y). p_Y(y)=&sum;_x p_XY(x,y).",href:"#multi"},
+  {t:"Estandarizacion Normal Z",s:"estandarizar tipificar pnorm qnorm percentil",b:"Z=(X-&mu;)/&sigma;~N(0,1). P(X&le;a)=pnorm((a-&mu;)/&sigma;). Percentil: qnorm(p,&mu;,&sigma;).",href:"#normal"},
+  {t:"Intervalos de Confianza",s:"IC intervalo confianza t student",b:"IC: x&#772;&plusmn;Z&alpha;/2&middot;&sigma;/&radic;n (sigma conocida). Usar t-Student si sigma desconocida.",href:"#inferencia"},
+  {t:"Test chi-cuadrado",s:"chi cuadrado chi2 contingencia independencia",b:"&chi;&#178;=&sum;(O-E)&#178;/E. E_ij=(fila&times;col)/total. gl=(filas-1)(cols-1).",href:"#contingencia"},
+  {t:"Propiedad sin memoria",s:"sin memoria exponencial geometrica",b:"P(X>t2+t1|X>t1)=P(X>t2). Solo Exponencial y Geometrica.",href:"#exponencial"},
+  {t:"Q-Q Plot",s:"qqplot qqnorm qqline normalidad cuantil",b:"Grafico para verificar normalidad. Si puntos siguen la diagonal: datos normales. En R: qqnorm()+qqline().",href:"#qqplot"},
+  {t:"Funcion Gamma",s:"funcion gamma integral factorial pi",b:"&Gamma;(&alpha;)=&int;x^(&alpha;-1)e^(-x)dx. &Gamma;(n)=(n-1)!. &Gamma;(1/2)=&radic;&pi;. &Gamma;(&alpha;+1)=&alpha;&Gamma;(&alpha;).",href:"#gamma"},
+  {t:"Errores tipicos de examen",s:"error trampa fallo comun tipico",b:"Cov=0 no implica independencia. No olvidar k! en Poisson. Escalar lambda en Poisson. Verificar condiciones Binomial.",href:"#errores"},
+];
+
+function doSearch(val){
+  const out=document.getElementById('search-results');
+  if(!val||val.length<2){out.innerHTML='';return;}
+  const term=val.toLowerCase();
+  const hits=searchDB.filter(d=>d.t.toLowerCase().includes(term)||d.s.toLowerCase().includes(term)||d.b.toLowerCase().includes(term));
+  if(!hits.length){out.innerHTML='<p style="color:#8892b0;text-align:center;padding:20px;">Sin resultados para "'+val+'"</p>';return;}
+  out.innerHTML=hits.map(h=>`
+    <a href="${h.href}" style="display:block;background:#1a1f38;border:1px solid #252d4a;border-radius:10px;padding:15px 19px;margin-bottom:9px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#6d9ee8'" onmouseout="this.style.borderColor='#252d4a'">
+      <div style="color:#e8b86d;font-weight:700;font-size:.97rem;margin-bottom:3px;">${h.t}</div>
+      <div style="color:#8892b0;font-size:.86rem;">${h.b}</div>
+    </a>`).join('');
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
